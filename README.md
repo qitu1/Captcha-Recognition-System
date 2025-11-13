@@ -12,7 +12,8 @@ A CNN-based CAPTCHA recognition system using character segmentation and classifi
 ├── src/                        # Source notebooks (run in order)
 │   ├── segmentation.ipynb     # Step 1: Detect character bounding boxes
 │   ├── extract_and_normalize.ipynb  # Step 2: Extract and normalize characters
-│   └── baseline_cnn.ipynb     # Step 3: Train CNN and evaluate
+│   ├── baseline_model.ipynb     # Step 3: Train CNN and evaluate
+│   └── improved_model.ipynb     # Step 4: Improve CNN and evaluate
 │
 ├── Segmented_dataset/          # Processed data
 │   ├── train_labels/          # YOLO format labels (bounding boxes)
@@ -23,7 +24,11 @@ A CNN-based CAPTCHA recognition system using character segmentation and classifi
 │
 └── models/
     └── saved_models/          
-        └── cnn_character_recognition.keras  # Trained baseline model
+        ├── cnn_character_recognition.keras  # Trained baseline model
+        ├── best_autoencoder.pth # Improved model encoder
+        ├── best_baseline_cnn.pth
+        ├── best_finetune_cnn.pth # Improved finetuned model
+
 
 segmentation_tokenization.ipynb/  #original segmentation file by Peidong
 ```
@@ -41,22 +46,37 @@ segmentation_tokenization.ipynb/  #original segmentation file by Peidong
 - Organizes characters into 36 folders (0-9, a-z)
 - Creates `.npz` cache for fast loading
 
-### 3. CNN Training & Evaluation (`baseline_cnn.ipynb`)
+### 3. CNN Training & Evaluation (`baseline_model.ipynb`)
 - Architecture: 3-layer CNN (32→64→128 filters)
 - Training: Full training set (46k+ characters)
 - Evaluation: Test set with two metrics:
   - **Character-level accuracy**: Individual character predictions
   - **String-level accuracy**: Complete CAPTCHA predictions (all characters must be correct)
 
+### 4. Improved Model (`improved_model.ipynb`)
+- **Two-stage training approach** for better performance:
+  - **Stage 1 - Autoencoder Pretraining**: 
+    - Learns robust feature representations from character images
+    - Encoder-decoder architecture with 128-dim latent space
+    - Helps model learn generalizable features for noisy/distorted characters
+  - **Stage 2 - Fine-tuning with Augmentation**:
+    - Transfers pretrained encoder weights to classifier
+    - Adds data augmentation (rotation, shift, zoom, shear)
+    - Uses Cosine Annealing learning rate scheduler
+- **Performance**: 
+  - Baseline accuracy: **84.72%**
+  - Improved accuracy: **88.33%** (+3.61% improvement)
+- **Key advantage**: Better generalization to distorted and noisy characters
+
 ## Quick Start
 
 1. **Run notebooks in order**:
    ```
-   segmentation.ipynb → extract_and_normalize.ipynb → baseline_cnn.ipynb
+   segmentation.ipynb → extract_and_normalize.ipynb → baseline_model.ipynb
    ```
 
 2. **Or use cached data** (skip steps 1-2):
-   - If `Segmented_dataset/cache/` exists, directly run `baseline_cnn.ipynb`
+   - If `Segmented_dataset/cache/` exists, directly run `baseline_model.ipynb`
 
 3. **Load trained model**:
    ```python
@@ -81,13 +101,20 @@ segmentation_tokenization.ipynb/  #original segmentation file by Peidong
 ## Requirements
 
 ```
-tensorflow
+tensorflow>=2.10.0
+torch>=2.0.0
+torchvision
 opencv-python
 numpy
 matplotlib
 seaborn
+scikit-learn
 tqdm
 ```
+
+**Note**: 
+- `tensorflow` is required for baseline model (`baseline_model.ipynb`)
+- `torch` and `torchvision` are required for improved model (`improved_model.ipynb`)
 
 ## Notes
 
