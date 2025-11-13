@@ -68,11 +68,17 @@ segmentation_tokenization.ipynb/  #original segmentation file by Peidong
   - Improved accuracy: **88.33%** (+3.61% improvement)
 - **Key advantage**: Better generalization to distorted and noisy characters
 
+## Dataset
+
+The dataset is available on Google Drive:
+
+**Download Link**: [CAPTCHA Dataset](https://drive.google.com/drive/folders/1Cr893MBAVEV5ol7wogf-ac5JbPz7ilbY?usp=sharing)
+
 ## Quick Start
 
 1. **Run notebooks in order**:
    ```
-   segmentation.ipynb → extract_and_normalize.ipynb → baseline_model.ipynb
+   segmentation.ipynb → extract_and_normalize.ipynb → baseline_model.ipynb → improved_model.ipynb
    ```
 
 2. **Or use cached data** (skip steps 1-2):
