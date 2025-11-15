@@ -90,12 +90,16 @@ The dataset is available on Google Drive:
    model = tf.keras.models.load_model('models/saved_models/cnn_character_recognition.keras')
    ```
 
-## Model Performance
+## Baseline Model Performance
 
 - **Parameters**: ~235K (lightweight)
-- **Character Accuracy**: ~82% (on individual characters)
-- **String Accuracy**: ~30-40% (complete CAPTCHA, all chars correct)
+- **Character Accuracy**: ~84% (on individual characters)
+- **String Accuracy**: ~40% (complete CAPTCHA, all chars correct)
 - **Training Time**: ~6-8 minutes (CPU)
+
+## Enhanced Model Performance
+- **Character Accuracy**: ~88% (on individual characters)
+- **String Accuracy**: ~50% (complete CAPTCHA, all chars correct)
 
 ## Key Features
 
