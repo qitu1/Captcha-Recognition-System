@@ -63,10 +63,6 @@ segmentation_tokenization.ipynb/  #original segmentation file by Peidong
     - Transfers pretrained encoder weights to classifier
     - Adds data augmentation (rotation, shift, zoom, shear)
     - Uses Cosine Annealing learning rate scheduler
-- **Performance**: 
-  - Baseline accuracy: **84.72%**
-  - Improved accuracy: **88.33%** (+3.61% improvement)
-- **Key advantage**: Better generalization to distorted and noisy characters
 
 ## Dataset
 
@@ -101,13 +97,6 @@ The dataset is available on Google Drive:
 - **Character Accuracy**: ~88% (on individual characters)
 - **String Accuracy**: ~50% (complete CAPTCHA, all chars correct)
 
-## Key Features
-
-- **Fast data loading**: `.npz` cache reduces loading time from 2 minutes to 3 seconds
-- **Model interpretability**: Visualizes CNN feature maps to show what the model "sees"
-- **Overfitting detection**: Automatic analysis of train/test gap
-- **Two-level metrics**: Both character-level and string-level accuracy
-
 ## Requirements
 
 ```
@@ -125,9 +114,3 @@ tqdm
 **Note**: 
 - `tensorflow` is required for baseline model (`baseline_model.ipynb`)
 - `torch` and `torchvision` are required for improved model (`improved_model.ipynb`)
-
-## Notes
-
-- CAPTCHA format: Variable length (4-8 characters), alphanumeric (0-9, a-z)
-- Image size: Original varies, normalized to 32x32 for CNN input
-- Character extraction relies on YOLO bounding boxes from segmentation step
